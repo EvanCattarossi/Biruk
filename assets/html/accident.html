@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pourquoi moi ?</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+      color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 700px;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .phrase {
+      font-size: 1.4rem;
+      line-height: 2rem;
+      letter-spacing: 0.5px;
+      white-space: pre-line;
+      min-height: 160px;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      background-color: #00aaff;
+      margin-left: 5px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="phrase" id="typed-text"></div>
+  </div>
+
+  <script>
+    const texte = "Depuis toujours, je me demande : pourquoi ai-je été adopté ?\nDerrière ce choix, tant de silences.\nMon adoption reste une énigme, une cicatrice discrète,\nune renaissance sans réponse claire.";
+    const cible = document.getElementById("typed-text");
+
+    let i = 0;
+    function taper() {
+      if (i < texte.length) {
+        cible.innerHTML += texte.charAt(i);
+        i++;
+        setTimeout(taper, 50); // vitesse d'écriture
+      } else {
+        const cursor = document.createElement("span");
+        cursor.className = "cursor";
+        cible.appendChild(cursor);
+      }
+    }
+
+    window.onload = taper;
+  </script>
+</body>
+</html>

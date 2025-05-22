@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combat intérieur</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .combat-arene {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #222;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .personnage {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+        }
+
+        .personnage-1 {
+            left: 50px;
+            bottom: 50px;
+        }
+
+        .personnage-2 {
+            right: 50px;
+            bottom: 50px;
+        }
+
+        .personnage img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .vie-barre {
+            width: 100%;
+            height: 20px;
+            background-color: #f00;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        button {
+            position: absolute;
+            bottom: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #666;
+        }
+
+        #attaque-1 {
+            left: 20px;
+        }
+
+        #attaque-2 {
+            right: 20px;
+        }
+
+        .explosion {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ffcc00, red);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .description {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            max-width: 700px;
+        }
+    </style>
+</head>
+<body>
+    <div class="combat-arene">
+        <div class="description">
+            <h2>Combat intérieur : Biruk vs Evan</h2>
+            <p>Ce combat représente la dualité entre mon passé éthiopien et ma vie actuelle. Entre Biruk, mon nom d’origine, et Evan, celui que je porte aujourd’hui. C’est un affrontement entre les questions sans réponses et le besoin de trouver ma paix.</p>
+        </div>
+
+        <div class="personnage personnage-1">
+            <img src="assets/img/biruk.jpg" alt="Biruk, passé éthiopien">
+            <div class="vie-barre vie-barre-1"></div>
+        </div>
+        <div class="personnage personnage-2">
+            <img src="assets/img/evan.jpg" alt="Evan, identité présente">
+            <div class="vie-barre vie-barre-2"></div>
+        </div>
+
+        <button id="attaque-1">Les souvenirs</button>
+        <button id="attaque-2">La réalité</button>
+
+        <div id="explosion" class="explosion"></div>
+    </div>
+
+    <script>
+        const vieBarre1 = document.querySelector('.vie-barre-1');
+        const vieBarre2 = document.querySelector('.vie-barre-2');
+        const attaque1 = document.getElementById('attaque-1');
+        const attaque2 = document.getElementById('attaque-2');
+        const explosion = document.getElementById('explosion');
+
+        let vie1 = 100;
+        let vie2 = 100;
+
+        attaque1.addEventListener('click', () => {
+            vie2 -= 20;
+            vieBarre2.style.width = `${Math.max(vie2, 0)}%`;
+            if (vie2 <= 0) {
+                finCombat("Biruk domine, les souvenirs reviennent.");
+            }
+        });
+
+        attaque2.addEventListener('click', () => {
+            vie1 -= 20;
+            vieBarre1.style.width = `${Math.max(vie1, 0)}%`;
+            if (vie1 <= 0) {
+                finCombat("Evan prend le dessus, le présent s’impose.");
+            }
+        });
+
+        function finCombat(message) {
+            attaque1.disabled = true;
+            attaque2.disabled = true;
+            explosion.style.opacity = 1;
+            setTimeout(() => {
+                alert(message + " Combat intérieur terminé.");
+            }, 500);
+        }
+    </script>
+</body>
+</html>

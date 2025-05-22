@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feu intérieur</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #0d0d0d;
+            overflow: hidden;
+        }
+        
+        .section-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .energy-ball {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #ff6a00, #ff0000, #800000);
+            box-shadow:
+                0 0 40px 10px rgba(255, 100, 0, 0.7),
+                0 0 60px 20px rgba(255, 0, 0, 0.5),
+                0 0 80px 40px rgba(255, 0, 0, 0.2);
+            animation: pulsate 2s infinite ease-in-out;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .energy-ball::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+            mix-blend-mode: screen;
+            animation: rotate-glow 3s linear infinite;
+        }
+
+        .energy-ball:hover {
+            transform: scale(1.3);
+            box-shadow:
+                0 0 80px 30px rgba(255, 200, 0, 0.8),
+                0 0 100px 40px rgba(255, 80, 0, 0.6),
+                0 0 120px 60px rgba(255, 20, 0, 0.4);
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff4500;
+            font-size: 2rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s; /* Transition plus rapide */
+        }
+
+        @keyframes pulsate {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow:
+                    0 0 40px 10px rgba(255, 100, 0, 0.7),
+                    0 0 60px 20px rgba(255, 0, 0, 0.5),
+                    0 0 80px 40px rgba(255, 0, 0, 0.2);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow:
+                    0 0 60px 20px rgba(255, 150, 0, 0.8),
+                    0 0 80px 30px rgba(255, 50, 0, 0.6),
+                    0 0 100px 50px rgba(255, 0, 0, 0.3);
+            }
+        }
+
+        @keyframes rotate-glow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="section-container">
+        <div class="energy-ball" onclick="explode()"></div>
+        <div class="message" id="explosion-message"> CETTE ENERGIE VAS BIETOT EXPLOSER ! </div>
+    </div>
+    <audio id="explosion-sound">
+        <source src="explosion.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        function explode() {
+            const ball = document.querySelector('.energy-ball');
+            const sound = document.getElementById('explosion-sound');
+            const message = document.getElementById('explosion-message');
+
+            sound.currentTime = 0;
+            sound.play();
+
+            ball.style.transition = 'transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.2s ease-out';
+            ball.style.transform = 'scale(3)'; // Explosion plus grande
+            ball.style.boxShadow = '0 0 300px 100px rgba(255, 255, 0, 1)'; // Effet d'explosion plus intense
+            ball.style.background = 'radial-gradient(circle at center, #ffff00, #ff6600, #ff0000)';
+
+            message.style.opacity = 1;
+
+            setTimeout(() => {
+                ball.style.transition = 'transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, background 0.5s ease-in-out';
+                ball.style.transform = 'scale(1)';
+                ball.style.background = 'radial-gradient(circle at center, #ff6a00, #ff0000, #800000)';
+                ball.style.boxShadow = '0 0 40px 10px rgba(255, 100, 0, 0.7), 0 0 60px 20px rgba(255, 0, 0, 0.5), 0 0 80px 40px rgba(255, 0, 0, 0.2)';
+                message.style.opacity = 0;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
